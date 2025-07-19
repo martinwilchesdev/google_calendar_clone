@@ -169,7 +169,7 @@ header {
     position: fixed;
     display: flex;
     inset: 0;
-    /* display: none; */
+    display: none;
     align-items: center;
     justify-content: center;
     background-color: rgba(0, 0, 0, 0.5);
@@ -222,4 +222,43 @@ header {
 .modal-content button:last-child {
     background-color: #e5e7eb;
     color: #333;
+}
+
+/* dropdown for multiple events */
+#eventSelector {
+    width: 100%;
+    padding: 10px;
+    font-size: 1rem;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+.day-overlay {
+    position: absolute;
+    top: 6px;
+    right: 6px;
+    display: none;
+    flex-direction: column;
+    gap: 4px;
+    z-index: 2;
+}
+
+.day:hover .day-overlay {
+    display: flex;
+}
+
+.overlay-btn {
+    background-color: var(--primary-dark);
+    color: #fff;
+    padding: 4px 8px;
+    font-size: 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.overlay-btn:hover {
+    background-color: var(--primary);
 }
