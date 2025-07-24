@@ -1,15 +1,17 @@
 <?php
 
-// incluido archivo de conexion para conectar la base de datos
+// archivo de conexion para conectar la base de datos
 include 'connection.php';
 
-$success = '';
-$error = '';
-$eventsFromDB = []; // almacenar los eventos de la consulta
+$error = ''; // mensaje de error
+$success = ''; // mensaje de exito
+$eventsFromDB = []; // eventos de la consulta
 
-// añadir nuevas citas
+/**
+ * * añadir nuevas citas
+*/
 
-// validar el metodo de la peticion realizada // si es POST valida que el atributo `action` contenga el valor `add`
+// $_SERVER['REQUEST_METHOD'] valida el metodo de la peticion realizada // si es POST valida que el atributo `$_POST['action']` contenga el valor `add`
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'add') {
     $instructor = trim($_POST['instructor_name'] ?? '');
     $course = trim($_POST['course_name'] ?? '');
@@ -27,15 +29,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'add')
 
         header('Location: ' . $_SERVER['PHP_SELF'] . '?success=1');
         exit;
-    } else {
-        header('Location: ' . $_SERVER['PHP_SELF'] . '?error=1');
     }
 }
 
-// editar citas
+/**
+ * * editar citas
+*/
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') == 'edit') {
-    $id = $_POST['event_id'] ?? null;
+    $id = $_POST['event_id'] ?? null; // identificador
 
     $instructor = trim($_POST['instructor_name'] ?? '');
     $course = trim($_POST['course_name'] ?? '');
@@ -53,16 +55,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') == 'edit')
 
         header('Location: ' . $_SERVER['PHP_SELF'] . '?success=2');
         exit;
-    } else {
-        header('Location: ' . $_SERVER['PHP_SELF'] . '?error=2');
     }
 }
 
 
-// eliminar citas
+/**
+ * * eliminar citas
+*/
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'delete') {
-    $id = $_POST['event_id'] ?? null;
+    $id = $_POST['event_id'] ?? null; // identificador
 
     if ($id) {
         $statement = $connection->prepare(
@@ -75,13 +77,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'delet
 
         header('Location: ' . $_SERVER['PHP_SELF'] . '?success=3');
         exit;
-    } else {
-        header('Location: ' . $_SERVER['PHP_SELF'] . '?error=3');
     }
 }
 
 // mensajes de error y exito
 if (isset($_GET['success'])) {
+    // `match` permite realizar una evaluacion basada en el control de identidad de un valor
     $success = match ($_GET['success']) {
         '1' => 'Appoinment created successfully',
         '2' => 'Appoinment edited successfully',
